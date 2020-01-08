@@ -1,16 +1,3 @@
-
-after_script:
-  - cd ./public
-  - git init
-  - git config user.name "your-git-name"
-  - git config user.email "your-email-address"
-  - git add .
-  - git commit -m "Update blog content by Travis CI"
-  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
-
-
-
-
 # 指定构建环境是Node.js，当前版本是稳定版
 language: node_js
 node_js:
@@ -50,5 +37,4 @@ after_script:
   - git add .
   - git commit -m "Update blog content by Travis CI"
   - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
-  # - hexo deploy
-  
+  - hexo deploy
