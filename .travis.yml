@@ -1,5 +1,5 @@
-before_script:
-  - apt-get update -qq&&apt-get install -y -qq pandoc
+# before_script:
+#   - apt-get update -qq&&apt-get install -y -qq pandoc
 # 指定语言环境
 language: node_js
 # 指定需要sudo权限
@@ -12,6 +12,11 @@ cache:
   directories:
     - node_modules
 
+# 指定博客的仓库地址
+env:
+ global:
+   - GH_REF: github.com/aipikachu/aipikachu.github.io.git
+
 # 指定博客源码分支，master.
 branches:
   only:
@@ -20,13 +25,16 @@ branches:
 before_install:
   - npm install -g hexo-cli
 
-# Start: Build Lifecycle
 install:
   - npm install
-  - npm install hexo-deployer-git --save
-  - npm install hexo-generator-searchdb --save
+  - npm uninstall hexo-renderer-pandoc --save
+  - npm uninstall hexo-renderer-marked --save
   - npm install hexo-renderer-kramed --save
+  - npm uninstall hexo-math --save
   - npm install hexo-renderer-mathjax --save
+  - npm install hexo-abbrlink --save
+  - npm install hexo-deployer-git --save
+  - npm install hexo-generator-feed --save
 
 # 执行清缓存，生成网页操作
 script:
@@ -40,6 +48,6 @@ after_script:
   - git config user.name "Vincent Zhang"
   - git config user.email "zhangwya@gmail.com"
   - git add .
-  - git commit -m "Update blog content by Travis CI"
-  - git push --force --quiet "https://${GH_TOKGH}@${GH_REF}" master:master
+  - git commit -m "Update docs"
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:master
 
