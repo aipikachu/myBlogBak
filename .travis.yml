@@ -1,10 +1,11 @@
+before_script:
+  - apt-get update -qq&&apt-get install -y -qq pandoc
 # 指定语言环境
 language: node_js
 # 指定需要sudo权限
 sudo: required
 # 指定node_js版本
-node_js:
-  - lts/*
+node_js: stable
 
 # 指定缓存模块，可选。缓存可加快编译速度。
 cache:
@@ -36,14 +37,9 @@ script:
 after_script:
   - cd ./public
   - git init
-  - git config user.name "aipikachu"
+  - git config user.name "Vincent Zhang"
   - git config user.email "zhangwya@gmail.com"
   - git add .
   - git commit -m "Update blog content by Travis CI"
   - git push --force --quiet "https://${GH_TOKGH}@${GH_REF}" master:master
-  # - git config user.name "aipikachu"
-  # - git config user.email "zhangwya@gmail.com"
-  # # 替换同目录下的_config.yml文件中gh_token字符串为travis后台刚才配置的变量，注意此处sed命令用了双引号。单引号无效！
-  # - sed -i "s/gh_token/${GH_TOKEN}/g" ./_config.yml
-  # - hexo deploy
 
